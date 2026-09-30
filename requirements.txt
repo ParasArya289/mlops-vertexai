@@ -1,0 +1,6 @@
+# Dev and CI environment. Runtime versions come from the pinned serve/api files, so the
+# pickles trained here load in the containers.
+-r requirements-serve.txt
+-r requirements-api.txt
+pytest==9.1.1
+ruff==0.16.9

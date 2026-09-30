@@ -1,0 +1,36 @@
+services:
+  clf:
+    build: {context: ., dockerfile: docker/Dockerfile.serve}
+    environment: {MODEL_TYPE: clf, MODEL_DIR: /model, LOG_PATH: /logs/clf.jsonl}
+    volumes: ["${DEPLOY_DIR:-./deployed}/clf:/model:ro", "./logs:/logs"]
+    ports: ["127.0.0.1:8081:8080"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request as u; u.urlopen('http://localhost:8080/health', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+  uplift:
+    build: {context: ., dockerfile: docker/Dockerfile.serve}
+    environment: {MODEL_TYPE: uplift, MODEL_DIR: /model, LOG_PATH: /logs/uplift.jsonl}
+    volumes: ["${DEPLOY_DIR:-./deployed}/uplift:/model:ro", "./logs:/logs"]
+    ports: ["127.0.0.1:8082:8080"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request as u; u.urlopen('http://localhost:8080/health', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+  facade:
+    build: {context: ., dockerfile: docker/Dockerfile.api}
+    environment:
+      CLF_URL: http://clf:8080/predict
+      UPLIFT_URL: http://uplift:8080/predict
+      TIMEOUT_S: "2.0"
+    ports: ["127.0.0.1:8080:8080"]
+    depends_on:
+      clf: {condition: service_healthy}
+      uplift: {condition: service_healthy}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request as u; u.urlopen('http://localhost:8080/health', timeout=2)"]
+      interval: 5s
+      timeout: 3s
+      retries: 10

@@ -1,0 +1,8 @@
+FROM python:3.13-slim
+WORKDIR /app
+COPY requirements-serve.txt .
+RUN pip install --no-cache-dir -r requirements-serve.txt
+COPY src/ src/
+ENV PYTHONUNBUFFERED=1 AIP_HTTP_PORT=8080
+EXPOSE 8080
+CMD ["python", "-m", "src.serve"]

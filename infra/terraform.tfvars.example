@@ -1,0 +1,5 @@
+project_id      = "your-project-id"
+region          = "us-central1"
+billing_account = ""   # e.g. "012345-6789AB-CDEF01"
+budget_usd      = 50
+budget_currency = "USD"   # must match your billing account's currency
