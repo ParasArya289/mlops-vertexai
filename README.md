@@ -53,7 +53,7 @@ Facade behaviour: if the uplift model fails or times out, it returns the classif
 ## Layout
 - infra/      Terraform
 - docs/       architecture diagrams
-- .github/    PR workflow (written, not yet run)
+- .github/    CI workflow (lint, tests, smoke; passing on GitHub Actions)
 - src/        data, training, serving, registry, gate, pipeline, drift, loop
 - api/        facade FastAPI (k8s manifests come with the GKE phase)
 - docker/     Dockerfiles for serving and the facade

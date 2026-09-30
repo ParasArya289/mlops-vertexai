@@ -96,7 +96,7 @@ Update after each phase.
 | 2 Training | todo | Local: both train scripts run from CLI. Vertex jobs, Experiments, Registry need cloud. |
 | 3 Serving | todo | Local: Compose curl and log rows pass, serves the registry champion (promote and rollback verified via /health). Cloud Build, Vertex Endpoints, BigQuery logs need cloud. |
 | 4 Facade | todo | Local: Compose response passes, uplift fallback (200, degraded) and classifier-down (503) checked against real containers in the smoke test. GKE, Gateway, HPA, Kustomize, load test need cloud. |
-| 5 CI/CD | todo | PR workflow (lint, tests, smoke) written but never run: needs a git repo on GitHub. Deploy half, Workload Identity Federation, tightened roles not built. |
+| 5 CI/CD | todo | PR workflow (lint, tests, smoke) passes on a GitHub-hosted runner (run on push to master; the pull_request trigger itself is untested). Deploy half, Workload Identity Federation, tightened roles not built. |
 | 6 Pipelines | todo | Local: pipeline rejects shuffled-label model (exit 1), file registry has champion/candidate aliases. KFP, Vertex Registry, Scheduler, caching need cloud. |
 | 7 Release safety | todo | Local: drift check (PSI on serving logs) exits 1 on shifted traffic and 0 on normal; no alert delivery exists locally. Canary split, rollback, Vertex Model Monitoring, dashboards, alerts need cloud. |
 | 8 Close the loop | todo | Local: `src.loop` runs drift check then retrain to candidate (never auto-promotes), promote and rollback in registry, README written. Drift-alert trigger via Cloud Monitoring and `make teardown` need cloud. |

@@ -185,11 +185,11 @@ flowchart TD
   api -.->|"HTTP only"| serve
 ```
 
-## 6. Delivery: the PR workflow (written, not yet run on GitHub)
+## 6. Delivery: the CI workflow
 
 ```mermaid
 flowchart LR
-  dev(["Pull request"]) -.->|"never run: this folder is not a git repo yet"| ci
+  dev(["Pull request, push to master,<br/>or manual dispatch"]) --> ci
 
   subgraph ci["GitHub Actions, .github/workflows/pr.yml"]
     direction LR
@@ -213,7 +213,7 @@ flowchart LR
 
 ## 7. Local to cloud mapping
 
-What each local piece becomes on GCP (Plan.md). Only the local column exists today, and the `pr.yml` workflow has never run on GitHub.
+What each local piece becomes on GCP (Plan.md). Only the local column exists today. The CI workflow runs on GitHub, but only the local checks, not any deploy.
 
 ```mermaid
 flowchart LR
@@ -225,7 +225,7 @@ flowchart LR
     l5["facade container"]
     l6["logs/*.jsonl"]
     l7["src.drift + src.loop"]
-    l8["scripts/smoke.sh (tested)<br/>pr.yml (written, not run)"]
+    l8["scripts/smoke.sh + pr.yml<br/>(passing on GitHub Actions)"]
   end
 
   subgraph cloud["GCP target, not built yet"]
