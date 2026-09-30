@@ -6,6 +6,7 @@ Request/response follow the Vertex custom-container contract so it deploys uncha
 import json
 import os
 import time
+from contextlib import asynccontextmanager
 from pathlib import Path
 
 import joblib
@@ -20,10 +21,21 @@ MODEL_TYPE = os.environ.get("MODEL_TYPE", "clf")
 MODEL_DIR = os.environ.get("MODEL_DIR", f"artifacts/{MODEL_TYPE}")
 LOG_PATH = os.environ.get("LOG_PATH", "")  # JSONL now; BigQuery serving_logs later
 
-app = FastAPI()
-model = joblib.load(Path(MODEL_DIR) / "model.joblib")
-_version_file = Path(MODEL_DIR) / "VERSION"  # written by registry.deploy
-MODEL_VERSION = _version_file.read_text().strip() if _version_file.exists() else "unversioned"
+model = None
+MODEL_VERSION = "unversioned"
+
+
+@asynccontextmanager
+async def lifespan(_app):
+    """Load at startup, not import, so the module imports without a model but a container still fails fast."""
+    global model, MODEL_VERSION
+    model = joblib.load(Path(MODEL_DIR) / "model.joblib")
+    version_file = Path(MODEL_DIR) / "VERSION"  # written by registry.deploy
+    MODEL_VERSION = version_file.read_text().strip() if version_file.exists() else "unversioned"
+    yield
+
+
+app = FastAPI(lifespan=lifespan)
 
 
 class Instance(BaseModel):
