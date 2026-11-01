@@ -1,6 +1,6 @@
 # mlops-uplift
 
-A learning project for deployment and MLOps on GCP. A classifier and an uplift model are trained, gated, registered, served, monitored for drift, and retrained. Model quality does not matter. The infrastructure path does. See [Plan.md](Plan.md) for phases and status.
+A learning project for deployment and MLOps on GCP. A classifier and an uplift model are trained, gated, registered, served, monitored for drift, and retrained. Model quality does not matter. The infrastructure path does. See [Plan.md](Plan.md) for phases and status, and [LEARNINGS.md](LEARNINGS.md) for GCP basics, how to navigate the console and CLI, every Phase 0 command, and what was learned in each phase.
 
 ## Architecture
 Seven diagrams (runtime, request flow, model lifecycle, drift loop, code map, CI, local-to-cloud mapping) are in [docs/architecture.md](docs/architecture.md).

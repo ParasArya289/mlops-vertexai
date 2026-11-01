@@ -19,7 +19,7 @@ variable "billing_account" {
   default     = ""
 }
 
-variable "budget_usd" {
+variable "budget_amount" {
   type        = number
   default     = 50
   description = "Budget amount, in the billing account's currency (see budget_currency)."

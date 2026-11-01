@@ -87,11 +87,11 @@ Done when: promote and rollback of a model version takes under 5 minutes.
 Endpoint deploy 10 to 15 minutes. Training job startup a few minutes. GKE cluster creation and first pod several minutes.
 
 ## Status tracker
-Update after each phase.
+Update after each phase, and add that phase's entry to [LEARNINGS.md](LEARNINGS.md).
 
 | Phase | Status | Notes |
 |---|---|---|
-| 0 Foundation | todo | |
+| 0 Foundation | done | 2026-09-30: apply (42 added), destroy (42 removed, verified in GCP), apply again, second plan shows no changes. Project `project-1706a61e-7bb3-4b69-a00`, budget 2000 INR. APIs stay enabled on destroy by design. IAM roles still project-wide; tighten in Phase 5. |
 | 1 ELT | todo | Local: `make_data.py` done. Dataform, Workflows, Scheduler need cloud. |
 | 2 Training | todo | Local: both train scripts run from CLI. Vertex jobs, Experiments, Registry need cloud. |
 | 3 Serving | todo | Local: Compose curl and log rows pass, serves the registry champion (promote and rollback verified via /health). Cloud Build, Vertex Endpoints, BigQuery logs need cloud. |
